@@ -5,10 +5,10 @@ option java_package = "com.moaje.common";
 option java_multiple_files = true;
 
 message Money {
-  int64 amount = 1;      // 금액
-  string currency = 2;   // 통화 (KRW 등)
+  int64 amount = 1;
+  string currency = 2;
 }
 
 message Idempotency {
-  string key = 1;        // 중복 처리 방지 키 (UUID 등)
+  string key = 1;
 }

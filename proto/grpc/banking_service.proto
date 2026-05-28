@@ -7,25 +7,48 @@ option java_package = "com.moaje.grpc.banking";
 option java_multiple_files = true;
 
 service BankingService {
-  // 실시간 이체 실행 (Asset -> Banking)
-  rpc ExecuteTransfer(TransferRequest) returns (TransferResponse);
+  rpc ExecuteTransfer(ExecuteTransferRequest) returns (ExecuteTransferResponse);
+  rpc SyncExternalAccountTransactions(SyncExternalAccountTransactionsRequest) returns (SyncExternalAccountTransactionsResponse);
 }
 
-message TransferRequest {
-  string transaction_id = 1;
-  string account_token = 2;        // Auth에서 발급한 토큰
-  moaje.common.Money amount = 3;
-  string target_bank_code = 4;
-  string target_account_no = 5;
-  moaje.common.Idempotency idempotency = 6;
+message ExecuteTransferRequest {
+  int64 transfer_id = 1;
+  int64 asset_transaction_id = 2;
+  string ci = 3;
+  string user_name = 4;
+  string phone_number = 5;
+  string withdrawal_account_id = 6;
+  string deposit_bank_code = 7;
+  string deposit_account_number = 8;
+  moaje.common.Money amount = 9;
 }
 
-message TransferResponse {
+message ExecuteTransferResponse {
   enum Status {
     SUCCESS = 0;
     FAILED = 1;
-    UNKNOWN = 2; // 망취소 대상
+    TIMEOUT = 2;
   }
+
   Status status = 1;
-  string kftc_response_code = 2;
+  string external_transaction_id = 2;
+  string response_code = 3;
+  string failure_reason = 4;
+}
+
+message SyncExternalAccountTransactionsRequest {
+  int64 user_id = 1;
+  int64 asset_account_id = 2;
+  string account_token = 3;
+  string external_account_number = 4;
+  string ci = 5;
+  string user_name = 6;
+  string phone_number = 7;
+  string cursor = 8;
+}
+
+message SyncExternalAccountTransactionsResponse {
+  bool success = 1;
+  int32 synced_count = 2;
+  string message = 3;
 }

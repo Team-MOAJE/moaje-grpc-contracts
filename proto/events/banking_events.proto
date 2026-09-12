@@ -1,13 +1,15 @@
 syntax = "proto3";
 package moaje.events.banking;
 
+import "common/resources.proto";
+
 option java_package = "com.moaje.events.banking";
 option java_multiple_files = true;
 
 message AccountCreatedEvent {
   string event_id = 1;
   string user_id = 2;
-  string account_number = 3;
+  int64 account_id = 3;
   string bank_code = 4;
   string product_name = 5;
   int64 initial_balance = 6;
@@ -23,6 +25,9 @@ message BankingTransferCompletedEvent {
   string external_transaction_id = 4;
   string response_code = 5;
   string occurred_at = 6;
+  string user_id = 7;
+  int64 account_id = 8;
+  moaje.common.Money amount = 9;
 }
 
 message BankingTransferFailedEvent {
@@ -32,4 +37,20 @@ message BankingTransferFailedEvent {
   string response_code = 4;
   string reason = 5;
   string occurred_at = 6;
+  string failure_status = 7;
+  string user_id = 8;
+  int64 account_id = 9;
+  moaje.common.Money amount = 10;
+}
+
+message BankingTransferReversedEvent {
+  string event_id = 1;
+  int64 transfer_id = 2;
+  string original_external_transaction_id = 3;
+  string external_reversal_transaction_id = 4;
+  string reason = 5;
+  string occurred_at = 6;
+  string user_id = 7;
+  int64 account_id = 8;
+  moaje.common.Money amount = 9;
 }

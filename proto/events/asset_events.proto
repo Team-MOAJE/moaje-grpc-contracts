@@ -36,3 +36,29 @@ message TransactionSucceededEvent {
   moaje.common.Money snapshot_balance = 17;
   string snapshot_as_of = 18;
 }
+
+message MonthlyCashflowAggregatedEvent {
+  string event_id = 1;
+  string user_id = 2;
+  string year_month = 3;
+  int64 revision = 4;
+  moaje.common.Money income_amount = 5;
+  moaje.common.Money expense_amount = 6;
+  // 개인 간 자금 이동은 소비로 오해하지 않도록 별도 금액으로 제공한다.
+  moaje.common.Money transfer_amount = 7;
+  string calculated_at = 8;
+}
+
+message CategoryCashflowAmount {
+  string category = 1;
+  moaje.common.Money amount = 2;
+}
+
+message CategoryCashflowAggregatedEvent {
+  string event_id = 1;
+  string user_id = 2;
+  string year_month = 3;
+  int64 revision = 4;
+  repeated CategoryCashflowAmount categories = 5;
+  string calculated_at = 6;
+}

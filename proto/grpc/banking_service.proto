@@ -63,4 +63,5 @@ message ExternalProjectionTransaction {
   moaje.common.Money amount = 3;
   int64 occurred_at_epoch_millis = 4;
   optional int64 completed_at_epoch_millis = 5;
+  optional string merchant_name = 6;
 }

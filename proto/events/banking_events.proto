@@ -16,6 +16,7 @@ message AccountCreatedEvent {
   string created_at = 7;
   string canceled_at = 8;
   string occurred_at = 9;
+  optional string bank_name = 10;
 }
 
 message BankingTransferCompletedEvent {

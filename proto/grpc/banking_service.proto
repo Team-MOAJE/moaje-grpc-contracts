@@ -55,6 +55,8 @@ message GetAccountProjectionSnapshotResponse {
   string account_status = 4;
   int64 as_of_epoch_millis = 5;
   repeated ExternalProjectionTransaction transactions = 6;
+  optional string bank_code = 7;
+  optional string bank_name = 8;
 }
 
 message ExternalProjectionTransaction {
